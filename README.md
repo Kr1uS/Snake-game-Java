@@ -4,7 +4,7 @@ Multithreaded application which implements the basic Snake game using Java and S
 # Application operation
 
 
-#
+
 <ul>
 <li>multithreaded implementation of game logic and graphical interface</li>
 <li>actual gameplay happens in a separate thread independent of the user interface thread</li>
