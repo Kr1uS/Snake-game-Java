@@ -82,8 +82,8 @@ public class Logic extends Thread implements Listener {
         graphicListener.gameOver();
         FileManager fileManager = new FileManager(graphicListener.getScore());
         graphicListener.bestScore(fileManager.getInfo(), fileManager.getPlayer());
-        this.stop();
-        snake.stop();
+        this.stop();        //FIX!!!
+        snake.stop();       //FIX!!!
     }
 
     @Override
