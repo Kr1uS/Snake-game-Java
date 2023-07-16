@@ -193,7 +193,7 @@ class Snake extends Thread implements InputListener {
         return event;
     }
 
-    public Event checkApple() {
+    public Event checkApple() {     // FIX!!!
         boolean bool = false;
         Event event = new Event(this);
 
