@@ -8,12 +8,18 @@ public class Logic extends Thread implements Listener {
     TableData tableData;
     private final int gameTick = 150;
     private GraphicListener graphicListener;
+    private boolean stopped;
 
     public Logic() {
         tableInt = new int[16][25];
         snake = new Snake(this);
         tableData = new TableData(this);
+        stopped = false;
         update();
+    }
+
+    public void threadStop() {
+        stopped = true;
     }
 
     @Override
@@ -25,7 +31,7 @@ public class Logic extends Thread implements Listener {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        while (true) {
+        while (!stopped) {
 
             printTableInt();
             update();
@@ -82,8 +88,8 @@ public class Logic extends Thread implements Listener {
         graphicListener.gameOver();
         FileManager fileManager = new FileManager(graphicListener.getScore());
         graphicListener.bestScore(fileManager.getInfo(), fileManager.getPlayer());
-        this.stop();        //FIX!!!
-        snake.stop();       //FIX!!!
+        this.threadStop();
+        snake.threadStop();
     }
 
     @Override
@@ -135,6 +141,7 @@ class Snake extends Thread implements InputListener {
     private int gameTick;
     public boolean toGrow;
     private Listener listener;
+    private boolean stopped;
 
     public Snake(Listener listener) {
         this.listener = listener;
@@ -148,6 +155,11 @@ class Snake extends Thread implements InputListener {
             case 3 -> direction = 's';
             case 4 -> direction = 'd';
         }
+        stopped = false;
+    }
+
+    public void threadStop() {
+        stopped = true;
     }
 
     public Event checkCollision() {
@@ -208,7 +220,7 @@ class Snake extends Thread implements InputListener {
     @Override
     public void run() {
         length = getLength();
-        while (true) {
+        while (!stopped) {
 
             if (toGrow) {
                 grow();
