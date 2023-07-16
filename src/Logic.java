@@ -6,7 +6,7 @@ public class Logic extends Thread implements Listener {
     private int[][] tableInt;
     private Snake snake;
     TableData tableData;
-    private final int gameTick = 150;
+    private final int gameTick = 200;
     private GraphicListener graphicListener;
     private boolean stopped;
 
@@ -193,23 +193,20 @@ class Snake extends Thread implements InputListener {
         return event;
     }
 
-    public Event checkApple() {     // FIX!!!
+    public Event checkApple() {
         boolean bool = false;
         Event event = new Event(this);
 
         int headX = body[0][0];
         int headY = body[0][1];
 
-        switch (direction) {
-            case 'w' -> headX--;
-            case 'a' -> headY--;
-            case 's' -> headX++;
-            case 'd' -> headY++;
-        }
-
-        if (headX-1 >= 0 && headX-1 < listener.getTableInt().length && headY-1 >= 0 && headY-1 < listener.getTableInt()[headX-1].length) {
-            if (listener.getTableInt()[headX-1][headY-1] < 0) {
-                bool = true;
+        for (int x = headX - 1; x < headX; x++) {
+            for (int y = headY - 1; y < headY; y++) {
+                if (x >= 0 && x < listener.getTableInt().length && y >= 0 && y < listener.getTableInt()[x].length) {
+                    if (listener.getTableInt()[x][y] < 0) {
+                        bool = true;
+                    }
+                }
             }
         }
 
